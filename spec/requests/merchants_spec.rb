@@ -12,11 +12,11 @@ RSpec.describe 'Merchants API' do
 
     it 'returns list of merchants' do
       expect(json).not_to be_empty
-      expect(json.length).to eq 10
+      expect(json[:data].length).to eq 10
     end
 
     it 'returns status code 200' do
-      expect(response).to have_http_response 200
+      expect(response).to have_http_status 200
     end
   end
 
