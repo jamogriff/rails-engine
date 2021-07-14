@@ -8,7 +8,7 @@ module ExceptionHandler
     end
 
     # used when #save! or #create! fail
-    rescue_from ActiveREcord::RecordInvalid do |e|
+    rescue_from ActiveRecord::RecordInvalid do |e|
       json_response({ message: "Sorry, #{e.message}" }, :unprocessable_entity)
     end
   end
