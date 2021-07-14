@@ -59,10 +59,10 @@ RSpec.describe 'Merchants API' do
     end
 
     context 'sad path' do
-      it 'returns error if id not found' do
+      it 'returns 404 error if id not found' do
         get '/api/v1/merchants/232322'
         expect(json[:message]).to eq "Sorry, Couldn't find Merchant with 'id'=232322"
-        expect(response).to have_http_status 401
+        expect(response).to have_http_status 404
       end
     end
 
