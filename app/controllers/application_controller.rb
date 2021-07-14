@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
-  # this module lives in models/concerns
+  # modules live in models/concerns
+  include Response
   include ExceptionHandler
 end
