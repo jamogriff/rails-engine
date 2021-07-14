@@ -10,6 +10,9 @@ require 'rspec/rails'
 require 'database_cleaner'
 require 'webmock/rspec'
 
+# Require files in Support dir
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
@@ -50,6 +53,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   ### Add Project specific configurations ###
+  config.include RequestSpecHelper, type: :request
   config.include FactoryBot::Syntax::Methods
 
   ## DB Cleaning
