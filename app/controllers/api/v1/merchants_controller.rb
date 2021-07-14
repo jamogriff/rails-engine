@@ -2,7 +2,7 @@ class Api::V1::MerchantsController < ApplicationController
 
   # GET /api/v1/merchants
   def index
-    @merchants = Merchant.all
+    @merchants = Merchant.paginate(params[:page], params[:per_page])
     render json: MerchantSerializer.new(@merchants)
   end
 
