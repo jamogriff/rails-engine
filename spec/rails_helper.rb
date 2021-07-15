@@ -53,7 +53,11 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   ### Add Project specific configurations ###
+  # User defined helper modules
   config.include RequestSpecHelper, type: :request
+  config.include FactoryHelper
+  
+  # FactoryBot methods
   config.include FactoryBot::Syntax::Methods
 
   ## DB Cleaning

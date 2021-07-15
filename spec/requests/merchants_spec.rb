@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'Merchants API' do
   # initialze Factorybot
   let!(:merchants) {create_list(:merchant, 50)}
-  let(:merchant) { merchants.first }
+  let!(:merchant) { merchant_with_items }
   let(:merchant_id) { merchant.id}
   let(:merchant_items) { merchant.items }
 
@@ -41,7 +41,7 @@ RSpec.describe 'Merchants API' do
 
     it 'conforms to both parameters' do
       get '/api/v1/merchants?page=2&per_page=40'
-      expect(json[:data].length).to eq 10
+      expect(json[:data].length).to eq 11
     end
 
   end
@@ -62,7 +62,7 @@ RSpec.describe 'Merchants API' do
     context 'sad path' do
       it 'returns 404 error if id not found' do
         get '/api/v1/merchants/232322'
-        expect(json[:message]).to eq "Sorry, Couldn't find Merchant with 'id'=232322"
+        expect(json[:message]).to eq "Query unable to be resolved."
         expect(response).to have_http_status 404
       end
     end
