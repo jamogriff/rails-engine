@@ -20,6 +20,11 @@ class Api::V1::ItemsController < ApplicationController
     json_response(ItemSerializer.new(@item), :created)
   end
 
+  def destroy
+    @item.destroy
+    head :no_content
+  end
+
   private
 
   def item_params

@@ -76,6 +76,25 @@ RSpec.describe 'Items API Endpoints' do
     end
   end
 
+  describe 'DELETE /items/:id' do
+    context 'happy path' do
+      before { delete "/api/v1/items/#{item.id}" }
+
+      it 'successfully deletes an item' do
+        expect(response).to have_http_status 204
+      end
+    end
+
+    context 'sad path' do
+      before { delete "/api/v1/items/23323" }
+
+      it 'returns 404' do
+        expect(response).to have_http_status 404
+      end
+    end
+  end
+
+
 
 end
 
