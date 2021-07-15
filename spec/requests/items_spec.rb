@@ -48,8 +48,6 @@ RSpec.describe 'Items API Endpoints' do
                              merchant_id: merchant_1.id } }
 
 
-    # No name present
-    # Need to add validation to model for that though...
     let(:invalid_attributes) { { description: "It falls down on people's heads.",
                              unit_price: 888.88,
                              merchant_id: merchant_1.id } }
@@ -93,6 +91,36 @@ RSpec.describe 'Items API Endpoints' do
       end
     end
   end
+
+  describe 'PUT /items/:id' do
+    let(:valid_attributes) { { name: "Maxwell Silver Hammer" } }
+
+    context 'happy path' do
+      before { put "/api/v1/items/#{item.id}", params: valid_attributes }
+
+      it 'successfully updates an item' do
+        expect(response).to have_http_status 204
+        expect(item.reload.name).to eq "Maxwell Silver Hammer"
+      end
+    end
+
+    context 'sad path' do
+      before { put "/api/v1/items/23323" }
+
+      it 'returns 404' do
+        expect(response).to have_http_status 404
+      end
+    end
+
+    context 'edge case' do
+      before { put "/api/v1/items/#{item.id}", params: {unit_price: 'oompla loopa'} }
+
+      it 'returns 422' do
+        expect(response).to have_http_status 422
+      end
+    end
+  end
+
 
 
 
