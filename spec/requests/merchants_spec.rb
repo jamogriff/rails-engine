@@ -6,6 +6,7 @@ RSpec.describe 'Merchants API' do
   let!(:merchants) {create_list(:merchant, 50)}
   let(:merchant) { merchants.first }
   let(:merchant_id) { merchant.id}
+  let(:merchant_items) { merchant.items }
 
   describe 'GET /api/v1/merchants' do
     # make http request
@@ -65,9 +66,21 @@ RSpec.describe 'Merchants API' do
         expect(response).to have_http_status 404
       end
     end
-
   end
 
+  describe 'GET /api/v1/merchants/:id/items' do
+    before { get "/api/v1/merchants/#{merchant_id}/items" }
+
+    context 'happy path' do
+      it 'returns one merchants items' do
+        item_1 = merchant_items.first
+        item_2 = merchant_items.last
+        expect(json[:data].length).to eq merchant_items.length
+        expect(json[:data][0][:attributes][:name]).to eq item_1.name
+        expect(json[:data][-1][:attributes][:name]).to eq item_2.name
+      end
+    end
+  end
 
 end
       
