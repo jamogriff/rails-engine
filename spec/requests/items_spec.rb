@@ -69,13 +69,12 @@ RSpec.describe 'Items API Endpoints' do
 
       it 'returns error information' do
         expect(response).to have_http_status 422
-        expect(response[:message]).to match /Error, record could not be processed/
+        # Need to check whether response actually sends this back
+        expect(json[:message]).to match /Record unable to be processed./
       end
 
     end
-
   end
-
 
 
 end
