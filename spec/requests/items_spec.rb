@@ -41,6 +41,41 @@ RSpec.describe 'Items API Endpoints' do
 
   end
 
+  describe 'POST /items' do
+    let(:valid_attributes) { { name: "Maxwell Silver Hammer",
+                             description: "It falls down on people's heads.",
+                             unit_price: 888.88,
+                             merchant_id: merchant_1.id } }
+
+
+    # No name present
+    # Need to add validation to model for that though...
+    let(:invalid_attributes) { { description: "It falls down on people's heads.",
+                             unit_price: 888.88,
+                             merchant_id: merchant_1.id } }
+
+    context 'happy path' do
+      before { post '/api/v1/items', params: valid_attributes }
+
+      it 'creates an item' do
+        expect(json[:data][:type]).to eq "item"
+        expect(json[:data][:attributes][:name]).to eq "Maxwell Silver Hammer"
+        expect(response).to have_http_status 201
+      end
+    end
+
+    context 'sad path' do
+      before { post '/api/v1/items', params: invalid_attributes }
+
+      it 'returns error information' do
+        expect(response).to have_http_status 422
+        expect(response[:message]).to match /Error, record could not be processed/
+      end
+
+    end
+
+  end
+
 
 
 end

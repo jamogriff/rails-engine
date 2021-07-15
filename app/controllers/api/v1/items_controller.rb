@@ -15,10 +15,15 @@ class Api::V1::ItemsController < ApplicationController
     json_response(ItemSerializer.new(@item))
   end
 
+  def create
+    @item = Item.create!(item_params)
+    json_response(ItemSerializer.new(@item), :created)
+  end
+
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :unit_price)
+    params.permit(:name, :description, :unit_price, :merchant_id)
   end
 
   def set_item

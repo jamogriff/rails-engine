@@ -20,7 +20,6 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def set_merchant
-    #binding.pry
     @merchant = Merchant.find(params[:id])
   end
 
