@@ -9,4 +9,20 @@ RSpec.describe Item do
     it { should validate_presence_of(:unit_price) }
     it { should validate_numericality_of(:unit_price) }
   end
+
+  describe 'class methods' do
+    let!(:merchant_1) { merchant_with_items(20) }
+    let!(:merchant_2) { merchant_with_items(20) }
+    let(:item_1) { { name: "Tres Comas Tequila" } }
+    let(:item_2) { { name: "Anton" } }
+
+    it 'returns results based on case-insensitive name' do
+      search_1 = "tres"
+      search_2 = "an"
+    
+      expect(Item.find_all(search_1).pluck(:name)).to include "Tres Comas Tequila"
+      expect(Item.find_all(search_2).pluck(:name)).to include "Anton"
+    end
+  end
+
 end

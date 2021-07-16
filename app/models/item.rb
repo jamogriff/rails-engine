@@ -10,4 +10,9 @@ class Item < ApplicationRecord
   # a merchant association, but I may be wrong
   validates_presence_of :name, :description, :unit_price
   validates_numericality_of :unit_price
+
+
+  def self.find_all(search_params)
+    Item.where("name ILIKE '%#{search_params}%'")
+  end
 end
