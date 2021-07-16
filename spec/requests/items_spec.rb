@@ -121,6 +121,14 @@ RSpec.describe 'Items API Endpoints' do
     end
   end
 
+  describe 'GET /items/:id/merchant' do
+    #before { get "/api/v1/items/#{item.id}/merchant" }
+    before { get api_v1_item_merchant_path(item_id: item.id) }
+
+    it 'returns merchant details' do
+      expect(json[:data][:attributes][:name]).to eq merchant_1.name
+    end
+  end
 
 
 

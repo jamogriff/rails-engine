@@ -19,8 +19,14 @@ class Api::V1::MerchantsController < ApplicationController
     params.require(:merchant).permit(:name)
   end
 
+  # items/:item_id/merchant also redirects to #show 
   def set_merchant
-    @merchant = Merchant.find(params[:id])
+    if params[:item_id].present?
+      item = Item.find(params[:item_id])
+      @merchant = item.merchant
+    else
+      @merchant = Merchant.find(params[:id])
+    end
   end
 
 end
