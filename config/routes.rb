@@ -1,17 +1,23 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+
+      # Merchants resources and namespace
       resources :merchants, only: [:index, :show] do
-        # This doesn't nest within merchants dir
-        # and uses the typical items controller,
-        # which is probably a good thing since they
-        # would be doing duplicate functions
-        # NOTE path is still unique
         resources :items, only: [:index]
       end
 
+      namespace :merchants do
+        get '/find', to: 'searches#show'
+      end
+
+      # Items resources and namespace
       resources :items do
         resource :merchant, only: :show
+      end
+
+      namespace :items do
+        get '/find_all', to: 'searches#index'
       end
     end
   end
