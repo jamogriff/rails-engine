@@ -13,10 +13,11 @@ RSpec.describe Item do
   describe 'class methods' do
     let!(:merchant_1) { merchant_with_items(20) }
     let!(:merchant_2) { merchant_with_items(20) }
-    let(:item_1) { { name: "Tres Comas Tequila" } }
-    let(:item_2) { { name: "Anton" } }
 
     it 'returns results based on case-insensitive name' do
+      create(:item, name: "Tres Comas Tequila")
+      create(:item, name: "Anton")
+
       search_1 = "tres"
       search_2 = "an"
     
