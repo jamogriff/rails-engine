@@ -17,5 +17,15 @@ RSpec.describe Merchant do
       expect(Merchant.find_by_name(search_1).name).to eq "Silvio Armandi"
       expect(Merchant.find_by_name(search_2).name).to eq "Silvio Armandi"
     end
+
+    it 'returns list of x merchants sorted by revenue' do
+      top_merchant = Merchant.sort_by_revenue(10).first
+      second_merchant = Merchant.sort_by_revenue(10).second
+      bottom_merchant = Merchant.sort_by_revenue(10).last
+
+      expect(Merchant.sort_by_revenue(10).length).to eq 10
+      expect(top_merchant.revenue).to be >= second_merchant.revenue
+      expect(second_merchant.revenue).to be > bottom_merchant.revenue
+    end
   end
 end
