@@ -5,6 +5,7 @@ RSpec.describe InvoiceItem do
   describe 'relationships/validations' do
     # there are other relationships here, but will filll in later
     it { should belong_to(:item) }
+    it { should belong_to(:invoice) }
   end
 
 end
