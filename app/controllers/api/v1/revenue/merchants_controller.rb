@@ -12,5 +12,12 @@ class Api::V1::Revenue::MerchantsController < ApplicationController
   end
 
   def show
+    # Check to see if param is an actual number; throws ArgumentError if not
+    converted_num = Integer params[:id]
+    # Check to see if params links to actual Merchant; throws RecordNotFound if not
+    Merchant.find(converted_num)
+    # Provided the above are valid, then return data
+    @merchant = Merchant.get_revenue_from(converted_num)
+    json_response(MerchantNameRevenueSerializer.new(@merchant))
   end
 end

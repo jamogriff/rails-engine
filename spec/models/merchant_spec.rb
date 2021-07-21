@@ -41,5 +41,12 @@ RSpec.describe Merchant do
       expect(second_merchant.revenue).to be > bottom_merchant.revenue
     end
     
+    it 'returns one merchant and their revenue' do
+      merchant = Merchant.all.first
+      revenue = Merchant.get_revenue_from(merchant.id)
+
+      expect(revenue.name).to eq merchant.name
+      expect(revenue.revenue).to be_a Float
+    end
   end
 end
