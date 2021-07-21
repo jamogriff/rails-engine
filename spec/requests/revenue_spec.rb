@@ -34,4 +34,31 @@ RSpec.describe 'Revenue endpoints' do
     end
   end
 
+  describe '/api/v1/revenue/merchants/:id' do
+    describe 'happy path' do
+      it 'returns a merchant with their revenue' do
+        merchant = Merchant.all.first
+        get "/api/v1/revenue/merchants/#{merchant.id}"
+
+        expect(response).to have_http_status 200
+        expect(json[:data][:attributes][:name]).to eq merchant.name
+        expect(json[:data][:attributes][:revenue]).to be_a Float
+      end
+    end
+
+    describe 'sad path' do
+      it 'returns error if id is doesn\'t match db' do
+        get "/api/v1/revenue/merchants/90909"
+        
+        expect(response).to have_http_status 404
+      end
+
+      it 'returns error if id is invalid' do
+        get "/api/v1/revenue/merchants/lolstrings"
+        
+        expect(response).to have_http_status 400
+      end
+    end
+  end
+
 end

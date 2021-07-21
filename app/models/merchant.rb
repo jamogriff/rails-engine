@@ -17,7 +17,7 @@ class Merchant < ApplicationRecord
     # If merchant doesn't have revenue, still provide an output
     # This could turn into a helper method
     if merchant_and_revenue.nil?
-      Merchant.select("merchants.id, merchants.name, 0.00 as revenue").where("merchants.id = ?", id).first
+      Merchant.select("merchants.id, merchants.name, sum(0 + 0.00) as revenue").where("merchants.id = ?", id).first
     else
       merchant_and_revenue
     end

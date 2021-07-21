@@ -46,7 +46,7 @@ RSpec.describe Merchant do
       revenue = Merchant.get_revenue_from(merchant.id)
 
       expect(revenue.name).to eq merchant.name
-      expect(revenue.revenue).to be_instance_of Float
+      expect(revenue.revenue).to be_a Float
     end
   end
 end
