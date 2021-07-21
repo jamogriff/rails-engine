@@ -1,0 +1,3 @@
+class RevenueController < ApplicationController
+
+end
