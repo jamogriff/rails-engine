@@ -14,7 +14,7 @@ RSpec.describe 'Revenue endpoints' do
 
         expect(response).to have_http_status 200
         expect(json[:data].length).to eq 5
-        expect(json[:data][:attribute][:revenue]).to be_instance_of Integer
+        expect(json[:data][0][:attributes][:revenue]).to be_instance_of Float
       end
 
       it 'returns top x of users choice' do
@@ -28,9 +28,9 @@ RSpec.describe 'Revenue endpoints' do
     describe 'sad path' do
       it 'can handle when quantity is not a number' do
         get '/api/v1/revenue/merchants?quantity=marshmellow'
-        
         expect(response).to have_http_status 400
       end
+
     end
   end
 

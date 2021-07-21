@@ -13,6 +13,12 @@ module ExceptionHandler
       json_response({ message:  "Record unable to be processed.",
                       error: e.message }, :unprocessable_entity)
     end
+
+    # Used when a user enters wrong data type as a parameter
+    rescue_from ArgumentError do |e|
+      json_response({ message: "Please enter correct data type.",
+                      error: e.message }, :bad_request)
+    end
   end
 
 end
