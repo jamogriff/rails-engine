@@ -6,6 +6,7 @@ RSpec.describe Merchant do
     it { should have_many(:items) }
     it { should have_many(:invoice_items).through(:items) }
     it { should have_many(:invoices).through(:invoice_items) }
+    it { should have_many(:transactions).through(:invoices) }
   end
 
   describe 'search methods' do
@@ -30,11 +31,12 @@ RSpec.describe Merchant do
     end
 
     it 'returns list of x merchants sorted by revenue' do
-      top_merchant = Merchant.sort_by_revenue(10).first
-      second_merchant = Merchant.sort_by_revenue(10).second
-      bottom_merchant = Merchant.sort_by_revenue(10).last
+      sorted_merchants = Merchant.sort_by_revenue(3)
+      top_merchant = sorted_merchants.first
+      second_merchant = sorted_merchants.second
+      bottom_merchant = sorted_merchants.last
 
-      expect(Merchant.sort_by_revenue(10).length).to eq 10
+      expect(sorted_merchants.length).to eq 3
       expect(top_merchant.revenue).to be >= second_merchant.revenue
       expect(second_merchant.revenue).to be > bottom_merchant.revenue
     end
