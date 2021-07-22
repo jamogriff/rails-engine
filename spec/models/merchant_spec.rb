@@ -54,7 +54,13 @@ RSpec.describe Merchant do
       end_time = "2021-05-01"
 
       # Not a great test. Could use verification, but I'm very confident it's accurate
-      expect(Merchant.revenue_between(start, end_time)).to be_a Float
+      # Test instances get created all on same day, so not really helpful to test here
+      # unless an overhaul of Factroies is warranted
+      expect(Merchant.revenue_between(start, end_time).revenue).to be nil
+    end
+
+    it 'returns total revenue' do
+      expect(Merchant.total_revenue.revenue).to be_a Float
     end
   end
 end

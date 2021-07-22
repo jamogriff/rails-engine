@@ -32,7 +32,16 @@ class Merchant < ApplicationRecord
       .limit(quantity)
   end
 
+  # Originally just returned a float, but needed a pseudo-object for serialization
   def self.revenue_between(start_time, end_time)
-    Merchant.joins(:transactions).where("invoices.status = 'shipped' AND transactions.result = 'success' AND invoices.created_at >= date '#{start_time}' AND invoices.created_at <= date '#{end_time}'").sum("invoice_items.quantity * invoice_items.unit_price")
+    result = Merchant.joins(:transactions).select("sum(invoice_items.quantity * invoice_items.unit_price) as revenue").where("invoices.status = 'shipped' AND transactions.result = 'success' AND invoices.created_at >= date '#{start_time}' AND invoices.created_at <= date '#{end_time}'")
+    result[0] # used to remove array
   end
+
+  # Originally just returned a float, but needed a pseudo-object for serialization
+  def self.total_revenue
+    result = Merchant.joins(:transactions).select("sum(invoice_items.quantity * invoice_items.unit_price) as revenue").where("invoices.status = 'shipped' AND transactions.result = 'success'")
+    result[0]
+  end
+
 end
