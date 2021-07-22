@@ -61,4 +61,41 @@ RSpec.describe 'Revenue endpoints' do
     end
   end
 
+  describe '/api/v1/revenue/' do
+    describe 'happy path' do
+      it 'returns revenue for everything by default' do
+        get '/api/v1/revenue'
+
+        expect(response).to have_http_status 200
+        expect(json[:data][:attributes][:revenue]).to be_a Float
+      end
+
+      it 'returns revenue between two dates' do
+        get '/api/v1/revenue?start_date=2012-03-05&end_date=2012-03-27'
+
+        expect(response).to have_http_status 200
+        expect(json[:data][:attributes][:revenue]).to be_a Float
+      end
+    end
+
+    describe 'sad path' do
+      it 'returns 400 if one params is missing' do
+        get '/api/v1/revenue?end_date=2021-03-27'
+
+        expect(response).to have_http_status 400
+      end
+
+      it 'returns 400 if params are garbage' do
+        get '/api/v1/revenue?end_date=stringcheese'
+
+        expect(response).to have_http_status 400
+      end
+
+      it 'returns 400 if params are in wrong format' do
+        get '/api/v1/revenue?start_date=09-21-2012&end_date=10-23-2012'
+
+        expect(response).to have_http_status 400
+      end
+    end
+  end
 end

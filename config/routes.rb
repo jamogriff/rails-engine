@@ -27,6 +27,8 @@ Rails.application.routes.draw do
         resources :merchants, only: [:index, :show]
       end
 
+      resources :revenue, only: :index
+
     end
   end
 end
