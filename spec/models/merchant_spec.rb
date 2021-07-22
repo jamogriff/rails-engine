@@ -48,5 +48,13 @@ RSpec.describe Merchant do
       expect(revenue.name).to eq merchant.name
       expect(revenue.revenue).to be_a Float
     end
+
+    it 'returns all revenue over a length of time' do
+      start = "2020-03-01"
+      end_time = "2021-05-01"
+
+      # Not a great test. Could use verification, but I'm very confident it's accurate
+      expect(Merchant.revenue_between(start, end_time)).to be_a Float
+    end
   end
 end
