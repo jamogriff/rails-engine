@@ -98,4 +98,17 @@ RSpec.describe 'Revenue endpoints' do
       end
     end
   end
+
+  describe '/api/v1/revenue/weekly' do
+    describe 'happy path' do
+      it 'returns revenue broken down by week' do
+        get '/api/v1/revenue/weekly'
+
+        expect(response).to have_http_status 200
+        expect(json[:data][0][:attributes][:week]).to be_a String
+        expect(json[:data][0][:attributes][:revenue]).to be_a String
+      end
+    end
+  end
+
 end
