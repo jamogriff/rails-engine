@@ -7,7 +7,5 @@ class WeeklyRevenueSerializer
     object.week.to_s[0..9]
   end
 
-  attribute :revenue do |object|
-    number_to_currency(object.revenue)
-  end
+  attribute :revenue
 end
