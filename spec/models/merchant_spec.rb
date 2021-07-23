@@ -62,5 +62,10 @@ RSpec.describe Merchant do
     it 'returns total revenue' do
       expect(Merchant.total_revenue.revenue).to be_a Float
     end
+
+    # Again, tests should be revisited with a better factory
+    it 'returns revenue by week' do
+      expect(Merchant.weekly_revenue).to be_a Array
+    end
   end
 end

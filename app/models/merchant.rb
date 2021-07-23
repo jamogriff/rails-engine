@@ -44,4 +44,7 @@ class Merchant < ApplicationRecord
     result[0]
   end
 
+  def self.weekly_revenue
+    Merchant.joins(:transactions).select("date_trunc('week', invoices.created_at) as week, sum(invoice_items.quantity * invoice_items.unit_price) as revenue").where("invoices.status = 'shipped' AND transactions.result = 'success'").group("week").order("week")
+  end
 end

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       # Revenue 
       namespace :revenue do
         resources :merchants, only: [:index, :show]
+        resources :weekly, only: :index
       end
 
       resources :revenue, only: :index
