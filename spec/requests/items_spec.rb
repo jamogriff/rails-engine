@@ -42,6 +42,7 @@ RSpec.describe 'Items API Endpoints' do
   end
 
   describe 'POST /items' do
+    let(:headers) { {'CONTENT-TYPE' => 'application/json'} }
     let(:valid_attributes) { { name: "Maxwell Silver Hammer",
                              description: "It falls down on people's heads.",
                              unit_price: 888.88,
@@ -53,7 +54,7 @@ RSpec.describe 'Items API Endpoints' do
                              merchant_id: merchant_1.id } }
 
     context 'happy path' do
-      before { post '/api/v1/items', params: valid_attributes }
+      before { post '/api/v1/items', params: JSON.generate(valid_attributes), headers: headers }
 
       it 'creates an item' do
         expect(json[:data][:type]).to eq "item"
@@ -63,7 +64,7 @@ RSpec.describe 'Items API Endpoints' do
     end
 
     context 'sad path' do
-      before { post '/api/v1/items', params: invalid_attributes }
+      before { post '/api/v1/items', headers: headers, params: JSON.generate(invalid_attributes) }
 
       it 'returns error information' do
         expect(response).to have_http_status 422
@@ -93,13 +94,14 @@ RSpec.describe 'Items API Endpoints' do
   end
 
   describe 'PUT /items/:id' do
+    let(:headers) { {'CONTENT-TYPE' => 'application/json'} }
     let(:valid_attributes) { { name: "Maxwell Silver Hammer" } }
 
     context 'happy path' do
-      before { put "/api/v1/items/#{item.id}", params: valid_attributes }
+      before { put "/api/v1/items/#{item.id}", headers: headers, params: JSON.generate(valid_attributes) }
 
       it 'successfully updates an item' do
-        expect(response).to have_http_status 204
+        expect(response).to have_http_status 200
         expect(item.reload.name).to eq "Maxwell Silver Hammer"
       end
     end

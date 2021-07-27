@@ -26,13 +26,9 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def update
-    # Weird quirk of if user tries to update id they receive
-    # a 204 status, but update doesn't actually take place.
-
-    # Postman tests fail because initial get fails for some reason...
-    # then other 3 tests fail because they don't account for 204 or 422
     @item.update!(item_params)
-    head :no_content
+    # Originally returned 402 nocontent here, but not as user-friendly
+    json_response(ItemSerializer.new(@item))
   end
 
   private
